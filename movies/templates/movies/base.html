@@ -1,0 +1,31 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+   
+    <link href="{% static 'css/movies.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div id="sidebar">
+        <h2>MOVIE looker upper</h2>
+        {% if msg %}
+            <h4 style="color:red;">{{ msg }}</h4>
+        {% endif %}
+        <form method="POST" class="search-form">{% csrf_token %}
+            {{ form.as_p }}
+        </br>
+            <button type='submit' class="save btn btn-default">Find, please</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "${workspaceFolder}/movie-env/bin/python",
+    "python.linting.enabled": false
+}
