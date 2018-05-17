@@ -9,6 +9,12 @@ from .forms import SearchForm, ReviewForm
 
 # Create your views here.
 
+def home(request):
+    ''' just returns to the main movie list '''
+    return movie_list(request)
+    #return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page,})
+
+
 def movie_list(request):
     ''' diplays list of movies as main body (search on side)'''
 
