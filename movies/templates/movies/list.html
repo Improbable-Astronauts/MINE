@@ -12,7 +12,7 @@ Movies
     {% if movies %}
     <h1>Movies I've have successfully added to db.</h1>
         {% for movie in movies %}
-            <h2 style="text-decoration: underline;">{{ movie.title}}</h2>
+            <h2><a href="{{ movie.get_absolute_url }}">{{ movie.title}}</h2>
             <p class="date">Came out in {{ movie.year }}</p>
             <p>{{ movie.length }}</p>
         {% endfor %}

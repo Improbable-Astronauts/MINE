@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import omdb
 
 from .models import Movie
-from .forms import SearchForm
+from .forms import SearchForm, ReviewForm
 
 
 # Create your views here.
@@ -54,3 +54,25 @@ def movie_list(request):
         form = SearchForm()
         
         return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page,})
+
+def movie_detail(request, title, year):
+    # if someone just types in an url that doesn't work return404 not break
+    movie = get_object_or_404(Movie, title=title, year=year)
+    # list of comments about the movie
+    reviews = movie.reviews.filter(active=True)
+
+    if request.method == 'POST':
+        # someone fills out a review form
+        rv_form = ReviewForm(data=request.POST)
+
+        if rv_form.is_valid():
+            # everythin is legit but we don't save to db yet
+            new_review = rv_form.save(commit=False)
+            new_review.movie = movie
+            #now that the review is assigned to the current movie save to db
+            new_review.save()
+    else:
+        rv_form = ReviewForm()
+
+    return render(request, 'movies/movie_detail.html', {'movie':movie, 'reviews':reviews, 'rv_form':rv_form})
+    

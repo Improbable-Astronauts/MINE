@@ -9,7 +9,7 @@ app_name='movies'
 urlpatterns = [
 
     path('', views.movie_list, name='movie_list'),
-
+    path('<str:title>/<int:year>', views.movie_detail, name='movie_detail'),
 ]
 
 #urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,40 @@
+{% extends "movies/base.html" %}
+
+{% block content %}
+
+<h1>{{ movie.title }}</h1>
+<p class="date">Came out in {{ movie.year }}</p>
+
+{% with reviews.count as total_reviews %}
+
+<!-- note pluralize tag on review(s) changes with param total -->
+<h3>{{ total_reviews }} review{{ total_reviews|pluralize }}</h3>
+
+{% endwith %}
+
+{% for review in reviews %}
+<div class="comment">
+    <p class="info">Review {{ forloop.counter }} by {{ review.name }} {{ review.created }}</p>
+    {{ review.body|linebreaks }}
+</div>
+
+{% empty %}
+    <p>No reviews for this movie yet.</p>
+{% endfor %}
+
+{% if new_comment %}
+        <h2>Your review has been added.</h2>
+    {% else %}
+        <h2>Review this thing!</h2>
+        <!-- <form action="." method="post"></form> -->
+        <form action="{{ movie.get_absolute_url }}" method="post">
+            {{ rv_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Add review"></p>
+        </form>
+    {%  endif %}
+    </form>
+    
+
+
+{% endblock %}
