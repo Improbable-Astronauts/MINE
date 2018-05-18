@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import omdb
-from .hidden import SECRET_KEY, omdb_key, Gmail_PASS
+from .hidden import SECRET_KEY, omdb_key, Gmail_PASS, DB_USER, DB_PASS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -92,10 +92,10 @@ DATABASES = {
         
 
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dltekb77kf62g',
+            'NAME': 'dk8043rlo251b',
             'USER': DB_USER,
             'PASSWORD': DB_PASS,
-            'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
+            'HOST': 'ec2-23-23-130-158.compute-1.amazonaws.com',
             'PORT': '5432',
         }
 
