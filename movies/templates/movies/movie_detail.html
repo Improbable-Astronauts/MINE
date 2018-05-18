@@ -5,6 +5,8 @@
 <h1>{{ movie.title }}</h1>
 <p class="date">Came out in {{ movie.year }}</p>
 
+<p><a href="{% url 'movies:share_reviews' movie.id %}">Share this movie</a></p>
+
 {% with reviews.count as total_reviews %}
 
 <!-- note pluralize tag on review(s) changes with param total -->

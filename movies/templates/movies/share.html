@@ -1,0 +1,17 @@
+{% extends "movies/base.html" %}
+
+{% block title %}Share a review{% endblock %}
+
+{% block content %}
+    {% if sent %}
+        <h1>E-mail successfully sent</h1>
+        <p>"{{ movie.title }}" was successfully sent by e-mail.</p>
+    {% else %}
+        <h1>Share "{{ movie.title }}" by e-mail</h1>
+        <form action="./share" method="post">
+            {{ email_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Send e-mail">
+        </form>
+    {% endif %}
+{% endblock %}

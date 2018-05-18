@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import omdb
-from .hidden import SECRET_KEY, omdb_key
+from .hidden import SECRET_KEY, omdb_key, Gmail_PASS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -132,3 +132,10 @@ STATICFILES_DIRS = (
 # OMDB settings
 API_KEY = omdb_key
 omdb.set_default('apikey', API_KEY)
+
+#set up smtp for sharing reviews
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'jasonr.jones14@gmail.com' # if using gmail don't forget to turn on access for less secure apps
+EMAIL_HOST_PASSWORD = Gmail_PASS
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

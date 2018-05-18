@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
+
 import omdb
 
 from .models import Movie
-from .forms import SearchForm, ReviewForm
+from .forms import SearchForm, ReviewForm, EmailReviewForm 
 
 
 # Create your views here.
@@ -82,3 +84,23 @@ def movie_detail(request, title, year):
 
     return render(request, 'movies/movie_detail.html', {'movie':movie, 'reviews':reviews, 'rv_form':rv_form})
     
+def share_reviews(request, movie_id):#, title, year):
+    # get the review you want to share
+    movie = get_object_or_404(Movie, id=movie_id)
+    # hasn't been mailed yet
+    sent = False
+
+    if request.method == "POST":
+        mail_form = EmailReviewForm(request.POST)
+        if mail_form.is_valid():
+            contents = mail_form.cleaned_data # dict of form values
+            movie_url = request.build_absolute_uri(movie.get_absolute_url())
+            subject = '{} ({}) recommends you see "{}"'.format(contents['name'], contents['email'], movie.title)
+            message = 'Read "{}" at {}\n\n{}\'s comments'.format(movie.title, movie_url, contents['name'], contents['comments'])
+            send_mail(subject, message, 'jasonr.jones14@gmail.com', [contents['to']])
+            sent = True 
+
+    else:
+        mail_form = EmailReviewForm()
+    
+    return render(request, 'movies/share.html', {'movie':movie, 'email_form':mail_form, 'sent':sent})
