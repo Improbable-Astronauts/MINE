@@ -27,7 +27,8 @@ SECRET_KEY = SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
 
 
 # Application definition
@@ -76,15 +77,32 @@ WSGI_APPLICATION = 'movie_review.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'basicmovies',
-        'USER': 'timmy',
-        'PASSWORD': 'home99run',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    '''local postgres db setting '''
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'basicmovies',
+    #     'USER': 'timmy',
+    #     'PASSWORD': 'home99run',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # }
+
+    ''' running heroku db setting '''
+     'default': {
+        
+
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'dltekb77kf62g',
+            'USER': DB_USER,
+            'PASSWORD': DB_PASS,
+            'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
+
 }
+
+# Configure Django App for Heroku.
+#django_heroku.settings(locals())
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -110,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
