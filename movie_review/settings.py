@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import django_heroku
 import omdb
 from .hidden import SECRET_KEY, omdb_key, Gmail_PASS, DB_USER, DB_PASS
 
@@ -101,8 +102,6 @@ DATABASES = {
 
 }
 
-# Configure Django App for Heroku.
-#django_heroku.settings(locals())
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -157,3 +156,6 @@ EMAIL_HOST_USER = 'jasonr.jones14@gmail.com' # if using gmail don't forget to tu
 EMAIL_HOST_PASSWORD = Gmail_PASS
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
