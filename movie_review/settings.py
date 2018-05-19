@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
 import django_heroku
 import omdb
 from .hidden import SECRET_KEY, omdb_key, Gmail_PASS, DB_USER, DB_PASS
@@ -87,18 +88,20 @@ DATABASES = {
     #     'HOST': 'localhost',
     #     'PORT': '',
     # }
-
-    ''' running heroku db setting '''
      'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        }
+    ''' running heroku db setting '''
+    #  'default': {
         
 
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dk8043rlo251b',
-            'USER': DB_USER,
-            'PASSWORD': DB_PASS,
-            'HOST': 'ec2-23-23-130-158.compute-1.amazonaws.com',
-            'PORT': '5432',
-        }
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'NAME': 'dk8043rlo251b',
+    #         'USER': DB_USER,
+    #         'PASSWORD': DB_PASS,
+    #         'HOST': 'ec2-23-23-130-158.compute-1.amazonaws.com',
+    #         'PORT': '5432',
+    #     }
 
 }
 
