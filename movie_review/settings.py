@@ -14,7 +14,8 @@ import os
 import dj_database_url
 import django_heroku
 import omdb
-from .hidden import SECRET_KEY, omdb_key, Gmail_PASS, DB_USER, DB_PASS
+from .hidden import (SECRET_KEY, omdb_key, Gmail_PASS, DB_USER, DB_PASS, SENDGRID_PASS,
+                    SENDGRID_USERNAME)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -89,6 +90,7 @@ DATABASES = {
     #     'HOST': 'localhost',
     #     'PORT': '',
     # }
+    # Below works with whitenoise
      'default': {
         'ENGINE': 'django.db.backends.postgresql',
         }
@@ -146,7 +148,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'static'),
 
 )
 # for gzip functionality
@@ -156,12 +158,23 @@ STATICFILES_DIRS = (
 API_KEY = omdb_key
 omdb.set_default('apikey', API_KEY)
 
-#set up smtp for sharing reviews
+#set up smtp for sharing reviews local only
+'''
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jasonr.jones14@gmail.com' # if using gmail don't forget to turn on access for less secure apps
 EMAIL_HOST_PASSWORD = Gmail_PASS
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+'''
+
+# using sendgrid
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = SENDGRID_USERNAME
+EMAIL_HOST_PASSWORD = SENDGRID_PASS
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = ''
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())

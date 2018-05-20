@@ -5,6 +5,7 @@
 <h1>{{ movie.title }}</h1>
 <p class="date">Came out in {{ movie.year }}</p>
 
+
 <p><a href="{% url 'movies:share_reviews' movie.id %}">Share this movie</a></p>
 
 {% with reviews.count as total_reviews %}
@@ -12,11 +13,15 @@
 <!-- note pluralize tag on review(s) changes with param total -->
 <h3>{{ total_reviews }} review{{ total_reviews|pluralize }}</h3>
 
+<!-- Average number of stars here? -->
+
 {% endwith %}
 
 {% for review in reviews %}
 <div class="comment">
     <p class="info">Review {{ forloop.counter }} by {{ review.name }} {{ review.created }}</p>
+    {{ review.stars }} stars{{ revies.stars|pluralize}} 
+    <!-- TODO fix stars pluralize -->
     {{ review.body|linebreaks }}
 </div>
 

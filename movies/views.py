@@ -9,8 +9,6 @@ from .models import Movie
 from .forms import SearchForm, ReviewForm, EmailReviewForm 
 
 
-# Create your views here.
-
 def home(request):
     ''' just returns to the main movie list '''
     return movie_list(request)
@@ -29,12 +27,9 @@ def movie_list(request):
         page = request.GET.get('page')
         try:
             movies = paginator.page(page)
-            print("1")
         except PageNotAnInteger:
-            print("2")
             movies = paginator.page(1)
         except EmptyPage:
-            print("3")
             movies = paginator.page(paginator.num_pages)
         # except ProgrammingError:
         #     print("4")
@@ -76,6 +71,7 @@ def movie_list(request):
         return render(request, 'movies/list.html', {'form':form})
 
 def movie_detail(request, title, year):
+    ''' show the details for that movie as well as reviews and a link to share via email'''
     # if someone just types in an url that doesn't work return404 not break
     movie = get_object_or_404(Movie, title=title, year=year)
     # list of comments about the movie
@@ -110,7 +106,8 @@ def share_reviews(request, movie_id):#, title, year):
             subject = '{} ({}) recommends you see "{}"'.format(contents['name'], contents['email'], movie.title)
             message = 'Read "{}" at {}\n\n{}\'s comments'.format(movie.title, movie_url, contents['name'], contents['comments'])
             send_mail(subject, message, 'jasonr.jones14@gmail.com', [contents['to']])
-            sent = True 
+            sent = True
+            print("SENT") 
 
     else:
         mail_form = EmailReviewForm()

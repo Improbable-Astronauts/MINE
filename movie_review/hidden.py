@@ -8,3 +8,8 @@ omdb_key = "4e0e5c0e"
 DB_USER = 'unpmonrpnuqhse'
 
 DB_PASS = 'eeda51cc8b0f76e34d732529dbfcd81c8f907c4a904649f15d773ed531358fe0'
+
+SENDGRID_API_KEY='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'
+
+SENDGRID_PASS = 'GI%2xY@itoz8'
+SENDGRID_USERNAME = 'jasonones'
