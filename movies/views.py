@@ -65,7 +65,7 @@ def movie_list(request):
             form = SearchForm()
         
         return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page,})
-    except None:
+    except TypeError: # no movies in db , movies=>None
         form = SearchForm()
         return render(request, 'movies/list.html', {'form':form})
 
