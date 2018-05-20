@@ -29,11 +29,17 @@ def movie_list(request):
         page = request.GET.get('page')
         try:
             movies = paginator.page(page)
+            print("1")
         except PageNotAnInteger:
+            print("2")
             movies = paginator.page(1)
         except EmptyPage:
+            print("3")
             movies = paginator.page(paginator.num_pages)
-        
+        # except ProgrammingError:
+        #     print("4")
+        #     movies = None
+
         if request.method == "POST":
         
             form = SearchForm(request.POST)
