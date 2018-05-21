@@ -82,18 +82,18 @@ WSGI_APPLICATION = 'movie_review.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 DATABASES = {
     #local postgres db
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'basicmovies',
-    #     'USER': 'timmy',
-    #     'PASSWORD': 'home99run',
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'basicmovies',
+        'USER': 'timmy',
+        'PASSWORD': 'home99run',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
     # Below works with whitenoise
-     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        }
+    #  'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     }
     #''' running heroku db setting '''
     #  'default': {
         
