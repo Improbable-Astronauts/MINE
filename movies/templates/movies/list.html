@@ -13,6 +13,19 @@ Movies
     <h1>Movies I've have successfully added to db.</h1>
         {% for movie in movies %}
             <h2><a href="{{ movie.get_absolute_url }}">{{ movie.title}}</a></h2>
+
+            <p class="tags">
+                    Tags: 
+                    {% for tag in movie.tags.all %}
+                    <a href="{% url 'movies:movie_list_by_tag' tag.slug %}">{{ tag.name }}</a>
+                    {% if not forloop.last %}, 
+                    {% endif %}
+                    {% endfor %}
+        
+                    <!-- {{ post.tags.all|join:", "}} -->
+                </p>
+
+
             <p class="date">Came out in {{ movie.year }}</p>
             <p>{{ movie.length }}</p>
         {% endfor %}

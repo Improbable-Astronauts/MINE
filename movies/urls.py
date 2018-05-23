@@ -9,6 +9,7 @@ app_name='movies'
 urlpatterns = [
 
     path('', views.movie_list, name='movie_list'),
+    path('<str:tag_slug>/', views.movie_list, name='movie_list_by_tag'),
     path('home', views.home, name='home'),
     path('<str:title>/<int:year>', views.movie_detail, name='movie_detail'),
     path('<int:movie_id>/share', views.share_reviews, name='share_reviews'),

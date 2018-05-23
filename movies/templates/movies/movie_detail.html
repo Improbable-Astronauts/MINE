@@ -8,6 +8,16 @@
 
 <p><a href="{% url 'movies:share_reviews' movie.id %}">Share this movie</a></p>
 
+<h2>Similar Movies</h2>
+    {% for movie in similar_movies %}
+        <p><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></p>
+    {% empty %}
+        There are no movies quite like this one in our db yet.
+    {% endfor %}
+
+
+
+
 {% with reviews.count as total_reviews %}
 
 <!-- note pluralize tag on review(s) changes with param total -->

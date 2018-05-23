@@ -5,6 +5,9 @@ from django.core.mail import send_mail
 
 import omdb
 
+from taggit.models import Tag
+from django.db.models import Count 
+
 from .models import Movie
 from .forms import SearchForm, ReviewForm, EmailReviewForm 
 
@@ -15,11 +18,17 @@ def home(request):
     #return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page,})
 
 
-def movie_list(request):
-    ''' diplays list of movies as main body (search on side)'''
+def movie_list(request, tag_slug=None):
+    ''' diplays list of movies as main body (search on side), if tag then a list of similar movies'''
 
     try:
         movies = Movie.objects.all().order_by('title')
+        tag=None
+
+        #if a tag_slug is in args, tet the tag and filter for movies by tag
+        if tag_slug:
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            movies = movies.filter(tags__in=[tag]) # note dunder
     
     #if movies:
     # paginations if to show only five movies per page
@@ -65,7 +74,7 @@ def movie_list(request):
         else:
             form = SearchForm()
         
-        return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page,})
+        return render(request, 'movies/list.html', {'movies':movies, 'form':form, 'page':page, 'tag':tag})
     except TypeError: # no movies in db , movies=>None
         form = SearchForm()
         return render(request, 'movies/list.html', {'form':form})
@@ -90,7 +99,17 @@ def movie_detail(request, title, year):
     else:
         rv_form = ReviewForm()
 
-    return render(request, 'movies/movie_detail.html', {'movie':movie, 'reviews':reviews, 'rv_form':rv_form})
+    # list similar movies by tags => tag ids, flat list of tuples
+    # https://softwareengineering.stackexchange.com/questions/254279/why-doesnt-python-have-a-flatten-function-for-lists
+    movie_tags_ids = movie.tags.values_list('id', flat=True)
+    similar_movies = Movie.objects.filter(tags__in=movie_tags_ids).exclude(id=movie.id)
+    # only list the first five by amount of shared tags
+    similar_movies = similar_movies.annotate(same_tags=Count('tags')).order_by('-same_tags')[:5]
+    
+    return render(request, 'movies/movie_detail.html', {'movie':movie, 
+                                                        'reviews':reviews, 
+                                                        'rv_form':rv_form,
+                                                        'similar_movies':similar_movies})
     
 def share_reviews(request, movie_id):#, title, year):
     # get the review you want to share

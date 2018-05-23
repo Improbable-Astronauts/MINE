@@ -2,12 +2,19 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from taggit.managers import TaggableManager
+
 from .starfield import StarRangeField
 
 class Movie(models.Model):
     title = models.CharField(max_length=500)
     year = models.CharField(max_length=4)
     length = models.CharField(max_length=20)
+
+    tags = TaggableManager() # https://django-taggit.readthedocs.io/en/latest/
+    
+    # class Meta:
+    #     ordering = ('title',)
 
     def __str__(self):
         return self.title
